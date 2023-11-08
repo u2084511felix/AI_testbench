@@ -11,26 +11,20 @@ import csv
 
 import regex as re
 
-encoding4 = tiktoken.encoding_for_model("gpt-4")
-encoding35 = tiktoken.encoding_for_model("gpt-3.5-turbo")
-embedding_encoding = tiktoken.encoding_for_model("text-embedding-ada-002")
-
-
 # LLM models
 gpt4 = "gpt-4"
 gpt46 = "gpt-4-0613"
 
-
 gpt35616k = "gpt-3.5-turbo-16k"
-
-
 gpt411 = "gpt-4-1106-preview"
 gpt3511 = "gpt-3.5-turbo-1106"
 
 # embedding model parameters
 embedding_model = "text-embedding-ada-002"
-embedding_encoding = "cl100k_base"  # this the encoding for text-embedding-ada-002
-tokenizer = tiktoken.get_encoding(embedding_encoding)
+
+encoding = "cl100k_base"  # this the encoding for text-embedding-ada-002
+tokenizer = tiktoken.get_encoding(encoding)
+
 import math
 
 inf = math.inf
@@ -61,20 +55,25 @@ def llmagent(messages, function_specifier="auto", functions=None, model=gpt3511,
     
     try:
         params = {
-            "model": model,
-            "temperature": temperature,
-            "messages": messages,
-            "top_p": top_p,
-            "frequency_penalty": frequency_penalty,
-            "presence_penalty": presence_penalty,
+            'model': model,
+            'temperature': temperature,
+            'messages': messages,
+            'top_p': top_p,
+            'frequency_penalty': frequency_penalty,
+            'presence_penalty': presence_penalty,
         }
 
         if max_tokens != 0:
-            params["max_tokens"] = max_tokens
+            params['max_tokens'] = max_tokens
         
         if functions is not None:
-            params["tools"] = functions
-            params["tool_choice"] = {"name": function_specifier}
+            params['tools'] = functions
+            params['tool_choice'] = {
+                'type': 'function', 
+                'function': {
+                    'name': function_specifier
+                }
+            }
         
         response = openai.ChatCompletion.create(**params)
 
@@ -106,12 +105,12 @@ def function_response(response, available_functions):
     return_values = {}
     try:
         for tool_call in response:
+            print("tool call detected\n", tool_call, "\n")
             
             function_name = tool_call.function.name
             function_to_call = available_functions[function_name]
             function_args = json.loads(tool_call.function.arguments)
             
-            return_values[function_name]
             print(str(function_args))
 
             if function_args == {}:
@@ -131,7 +130,7 @@ def function_response(response, available_functions):
             }
 
         return return_values
-            
+
     except Exception as e:
         print(f"\nException: {e}\n")
 
@@ -159,14 +158,14 @@ class Generator:
 
     def token_counter(self, functions=None):
         self.token_count = 0
-        token_izer = tiktoken.get_encoding(self.model)
+
         for msg in self.messages:
-            tokens = token_izer.encode(str(msg))
+            tokens = tokenizer.encode(str(msg))
             self.token_count += len(tokens)
 
         if functions is not None:
             for func in functions:
-                tokens = token_izer.encode(str(func))
+                tokens = tokenizer.encode(str(func))
                 self.token_count += len(tokens)
 
         print(f"\n\nToken count: {self.token_count}\n\n")
@@ -322,50 +321,22 @@ class EmbeddingsGenerator:
     def additional_search(self, column, row, query, n=1):
         df = self.dfs[column]
         query_embedding = get_embedding(query, engine=embedding_model)
-
         result = self.dfs[column]["similarity"]
 
-        
-
-
-
-        
-
-        
-
-        
-
-
-
-
     
-
-    
-
-
     def cull_by_max_tokens(self, column):
-        encoding = tiktoken.get_encoding(embedding_encoding)
         df = self.dfs[column]
-        df["n_tokens"] = df[column].apply(lambda x: len(encoding.encode(x)))
+        df["n_tokens"] = df[column].apply(lambda x: len(tokenizer.encode(x)))
         df = df[df["n_tokens"] <= max_tokens]
         self.dfs[column] = df
 
-def count_tokens(prompt, model):
 
-    if model == "gpt-4":
-        tokens = encoding4.encode(prompt)
-        num_tokens = len(tokens)  
-        return num_tokens
 
-    elif model == "gpt-3.5-turbo":
-        tokens = encoding35.encode(prompt)
-        num_tokens = len(tokens)
-        return num_tokens
+def count_tokens(prompt):
+    tokens = tokenizer.encode(prompt)
+    num_tokens = len(tokens)  
+    return num_tokens
 
-    elif model == "text-embedding-ada-002":
-        tokens = embedding_encoding.encode(prompt)
-        num_tokens = len(tokens)
-        return num_tokens
 
 
 #This function takes an array of strings and joins them into a single string with each element separated by a newline character.

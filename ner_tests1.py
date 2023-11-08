@@ -87,32 +87,45 @@ def Process_chunks(emails):
 
             email_json_array[key] = email_string
 
-
     return email_json_array
 
 
 def ner_function(entities):
     print("Extracting NER from text")
 
-    ner = []
+    ner = {}
+
     for entity in entities:
-        ner.append(entity)
-    
+        if entity['category'] not in ner:
+            ner[entity['category']] = []
+        ner[entity['category']].append(entity['entity'])
+
+
     if os.path.isfile('ner.json'):
         with open('ner.json', 'r') as f:
             data = json.load(f)
-            data['ner'].append(ner)
+            # update data with new ner
+            for category in ner:
+                if category not in data:
+                    print(f"New category found: {category}")
+                    data[category] = []
+                for entity in ner[category]:
+                    print(f"New entity found: {entity}")
+                    if entity not in data[category]:
+                        data[category].append(entity)
+
         with open('ner.json', 'w') as f:
             json.dump(data, f, indent=4)
 
     else:
         with open('ner.json', 'w') as f:
-            data = {}
-            data['ner'] = []
-            data['ner'].append(ner)
-            json.dump(data, f, indent=4)
+            for category in ner:
+                print(f"New category found: {category}")
+                print(f"New entities found: {ner[category]}")
+            json.dump(ner, f, indent=4)
 
     print("NER extraction complete, saved to ner.json")
+    return ("NER extraction complete, saved to ner.json")
 
 
 
@@ -121,7 +134,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "ner_function",
-            "description": "Extracts named entities and their custom categories from the input text based on the analysis of an email body. This function is specifically designed to analyze customer service email chains for an online webstore and create appropriate custom categories for the NER extraction.",
+            "description": "Extracts named entities and their custom categories from the input text based on the analysis of customer support emails for a webstore.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -150,15 +163,13 @@ tools = [
 
 
 
-
-
 if __name__ == '__main__':
 
     embedd = EmbeddingsGenerator("emails")
 
-# ====================================================================================================
-# ====================================================================================================
 
+# ====================================================================================================
+# ====================================================================================================
 
     # emails = parseEmailTranscript('transcript.txt')
         
@@ -189,7 +200,7 @@ if __name__ == '__main__':
     #             _summary["summary"].append(email['summary'])
     
 
-    # write to json file
+    # # write to json file
     # with open('emails.json', 'w') as outfile:
     #     json.dump(emails, outfile, indent=4)
 
@@ -213,7 +224,7 @@ if __name__ == '__main__':
 # ====================================================================================================
 # ====================================================================================================
 
-    
+
     # embedd.load_csv("subject.csv")
     # embedd.load_csv("body.csv")
     # embedd.load_csv("summary.csv")
@@ -228,34 +239,32 @@ if __name__ == '__main__':
     # load json emails
 
 
-
-
 # ====================================================================================================
 # ====================================================================================================
+
 
     gen = Generator("emails")
     gen.add_available_function("ner_function", ner_function)
 
     emails = json.load(open('emails.json', 'r'))
 
+    # for subject in list(emails.keys()):
+    #     for email in emails[subject]:
+    #         if (email.get('body') is not None):
+    #             gen.reset_messages()
+    #             # stringify body for json dump using regex
+    #             email['body'] = re.sub(r'[^a-zA-Z0-9\s]', '', email['body'])
+    #             email['body'] = re.sub(r'[\n\r]', ' ', email['body'])
+    #             text = email['body']
+    #             gen.run(msg=text, function_specifier="ner_function", model="gpt-4-1106-preview", temperature=0, max_tokens=3988, functions=tools)
 
-    for subject in list(emails.keys()):
-        for email in emails[subject]:
-            if (email.get('body') is not None):
-                gen.reset_messages()
-                # stringify body for json dump using regex
-                email['body'] = re.sub(r'[^a-zA-Z0-9\s]', '', email['body'])
-                email['body'] = re.sub(r'[\n\r]', ' ', email['body'])
-                text = email['body']
-                gen.run(msg=text, function_specifier="ner_function", model="gpt-4-1106-preview", temperature=0, max_tokens=3988, functions=tools)
-                
-    
+    transcript = open('transcript.txt', 'r').read()
+
+    gen.run(msg=transcript, function_specifier="ner_function", model="gpt-4-1106-preview", temperature=0, max_tokens=4000, functions=tools)
 
 
 # ====================================================================================================
 # ====================================================================================================
-
-    
 
 
     # for r in results:
