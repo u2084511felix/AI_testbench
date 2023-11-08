@@ -116,32 +116,35 @@ def ner_function(entities):
 
 
 
-ner_gpt_function = [
+tools = [
     {
-        "name": "ner_function",
-        "description": "Extracts named entities and their custom categories from the input text based on the analysis of the email chain. This function is specifically designed to analyze customer service email chains for an online webstore and create appropriate custom categories for the NER extraction.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "entities": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "entity": {
-                                "type": "string", 
-                                "description": "A Named entity extracted from the customer service email chain."
-                            },
-                            "category": {
-                                "type": "string", 
-                                "description": "Custom category of the named entity based on the analysis of the email chain."
-                            }
-                        }                            
+        "type": "function",
+        "function": {
+            "name": "ner_function",
+            "description": "Extracts named entities and their custom categories from the input text based on the analysis of an email body. This function is specifically designed to analyze customer service email chains for an online webstore and create appropriate custom categories for the NER extraction.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "entities": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "entity": {
+                                    "type": "string", 
+                                    "description": "A Named entity extracted from the customer service email chain."
+                                },
+                                "category": {
+                                    "type": "string", 
+                                    "description": "Custom category of the named entity based on the analysis of the email chain."
+                                }
+                            }                            
+                        }
                     }
                 }
-            }
-        },
-        "required": ["entities"]
+            },
+            "required": ["entities"]
+        }
     }
 ]
 
@@ -239,13 +242,12 @@ if __name__ == '__main__':
     for subject in list(emails.keys()):
         for email in emails[subject]:
             if (email.get('body') is not None):
-                gen.messages = []
-                gen.token_count = 0
+                gen.reset_messages()
                 # stringify body for json dump using regex
                 email['body'] = re.sub(r'[^a-zA-Z0-9\s]', '', email['body'])
                 email['body'] = re.sub(r'[\n\r]', ' ', email['body'])
                 text = email['body']
-                gen.run(msg=text, function_specifier="ner_function", model="gpt-4", temperature=0, max_tokens=3988, functions=ner_gpt_function)
+                gen.run(msg=text, function_specifier="ner_function", model="gpt-4-1106-preview", temperature=0, max_tokens=3988, functions=tools)
                 
     
 
