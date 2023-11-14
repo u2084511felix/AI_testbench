@@ -1,15 +1,26 @@
 import sys
 import tiktoken
-from openai.embeddings_utils import get_embedding, cosine_similarity
+
 import os
-import openai
 import pandas as pd
 import numpy as np
 import ast
 import json
 import csv
-
+from scipy.spatial.distance import cosine
+import ast
 import regex as re
+from pprint import pprint
+
+
+from openai import OpenAI
+import openai_utils
+
+client = OpenAI(
+  api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
+)
+
+
 
 # LLM models
 gpt4 = "gpt-4"
@@ -33,6 +44,9 @@ inf = math.inf
 
 max_tokens = 8000
 
+
+
+
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 logDirectory = '/home/ec2-user/chat/logs'
 client_admin_dir = '/home/ec2-user/chat/client_admin_directory'
@@ -45,11 +59,22 @@ def process_string(input_string):
     return number_character_in_string
 
 
-def embedding_agent(input):
-    response = openai.Embedding.create(input=input, model=embedding_model)
-    return response["data"][0]["embedding"]
+def get_embedding(text, model="text-embedding-ada-002"):
+   text = text.replace("\n", " ")
+   return client.embeddings.create(input = [text], model=model)['data'][0]['embedding']
 
 
+def cosine_similarity(self, vec1, vec2):
+    # Manual cosine similarity calculation
+    dot_product = np.dot(vec1, vec2)
+    norm_vec1 = np.linalg.norm(vec1)
+    norm_vec2 = np.linalg.norm(vec2)
+            
+    if norm_vec1 == 0 or norm_vec2 == 0:
+        return 0  # Handle division by zero
+            
+    similarity = dot_product / (norm_vec1 * norm_vec2)
+    return similarity
 
 def llmagent(messages, function_specifier="auto", functions=None, model=gpt3511, temperature=0, top_p=1, frequency_penalty=0, presence_penalty=0, max_tokens=0):
     
@@ -75,19 +100,24 @@ def llmagent(messages, function_specifier="auto", functions=None, model=gpt3511,
                 }
             }
         
-        response = openai.ChatCompletion.create(**params)
+        response = client.chat.completions.create(**params)
+        
+        response_message = response.choices[0].message
+        usage = response.usage
 
-        response_message = response["choices"][0]["message"]
-        usage = response["usage"]
+        total_tokens = usage.total_tokens
+        print(total_tokens)
 
-        if response_message.get("tool_calls"):
+
+
+        if response_message.tool_calls:
             print("\n\nfunction call detected.\n\n")
             print(response_message)
             print()
-            return (response_message["tool_calls"], usage)
+            return (response_message.tool_calls, usage)
         
         else:
-            response_text = response["choices"][0]["message"]["content"]
+            response_text = response.choices[0].message.content
             print("\n\nGenerator call detected.\n\n")
             print("\n\n", response_text, "\n\n")
             return (response_text, usage)
@@ -135,15 +165,6 @@ def function_response(response, available_functions):
         print(f"\nException: {e}\n")
 
 
-def embedding_agent(input):
-    response = openai.Embedding.create(
-        input=input, 
-        model=embedding_model
-    )
-    return response["data"][0]["embedding"]
-
-
-
 
 class Generator:
     def __init__(self, name):
@@ -177,7 +198,10 @@ class Generator:
             self.model = gpt35616k
 
     def system(self, msg):
-        self.messages[0] = {"role": "system", "content": msg}
+        if self.messages != []:
+            self.messages[0]({"role": "system", "content": msg})
+        else:
+            self.messages.append({"role": "system", "content": msg})
 
 
     def run(self, msg="", function_specifier="auto", model=gpt3511, temperature=0, top_p=1, frequency_penalty=0, presence_penalty=0, max_tokens=None, functions=None, extended_response=0):
@@ -239,6 +263,7 @@ class Generator:
         self.available_functions[name] = function
         print(name + " added\n")
 
+
     def reset_all(self):
         self.messages = []
         self.generated_text = ""
@@ -256,9 +281,122 @@ class Generator:
 
 
 
+class Threads:
+    def __init__(self, name):
+        self.name = name
+        self.threads = []
+        self.files = []
+        self.file_ids = []
+        self.assistant_ids = []
+        self.tools = []
+        self.thread_ids = []
+
+    def update_tools(self, tool):
+        self.tools.append(tool)
+        # eg. {"type": "retrieval"}
 
 
+    def add_file(self, file):
+        file = client.files.create(
+            file=open(file, 'rb'),
+            purpose='assistants'
+        )
 
+        file_id = file.id
+        print("uploaded file. file id: ", file_id)
+        self.file_ids.append(file_id)
+    
+    
+    def create_assistant(self, model, instructions):
+
+        assistant = client.beta.assistants.create(
+            instructions=instructions,
+            model=model,
+            tools=self.tools,
+            file_ids=self.file_ids,
+        )
+
+        assistant_id = assistant.id
+        print("assistant created. assistant id: ", assistant_id)
+        self.assistant_ids.append(assistant_id)
+        return assistant_id
+    
+    # optional
+    def update_assistant(self, assistant_id, instructions, model):
+        assistant = client.beta.assistants.update(
+            assistant_id,
+            instructions=instructions,
+            model = model,
+            tools=self.tools,
+            file_ids=self.file_ids,
+        )
+        assistant_id = assistant.id
+        print("assistant updated. assistant id: ", assistant_id)
+        return assistant_id
+
+    # optional
+    def retrieve_assistant(self, assistant_id):
+        assistant = client.beta.assistants.retrieve(assistant_id)
+        print("retreived assistant: ", assistant_id)
+        return assistant
+
+    def create_thread(self):
+        run = client.beta.threads.create()
+        thread_id = run.id
+        self.thread_ids.append(thread_id)
+        print("thread created. thread id: ", thread_id)
+        return thread_id
+
+    def add_message_to_thread(self, thread_id, content):
+        message = client.beta.threads.messages.create(
+            thread_id=thread_id,
+            role="user",
+            content=content
+        )
+        print("message added to thread: ", thread_id)
+        return message
+
+# =======================================================================================
+# =======================================================================================
+
+    def run_assistant_with_message(self, thread_id, assistant_id, instructions):
+        run = client.beta.threads.runs.create(
+            thread_id=thread_id,
+            assistant_id=assistant_id,
+            instructions=instructions
+        )
+
+        run_id = run.id
+    
+        while run.status not in ["completed", "failed"]:
+            run = client.beta.threads.runs.retrieve(
+                thread_id= thread_id,
+                run_id= run_id
+            )
+            print("run status: ", run.status)
+
+
+        print("run complete. run id: ", run_id)
+
+    
+    def retrieve_run_responses(self, thread_id):
+        messages = client.beta.threads.messages.list(
+            thread_id=thread_id,
+        )
+
+        last_message = ""
+        for each in messages:
+            #print(each.role, ": ", each.content[0].text.value)
+            last_message = each.content[0].text.value
+            print(last_message)
+
+        return last_message
+
+    def delete_assistant(self, assistant_id):
+        response = client.beta.assistants.delete(assistant_id)
+        print(response)
+        self.assistant_ids.remove(assistant_id)
+        return response
 
 
 

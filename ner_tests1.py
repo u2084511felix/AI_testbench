@@ -7,7 +7,7 @@ import time
 import datetime
 import random
 import csv
-
+from ai_functions import tools, tools2
 from dfclass import *
 
 def parseEmailTranscript(transcript):
@@ -54,8 +54,6 @@ def parseEmailTranscript(transcript):
             currentBody += line + '\n'
 
     return emails
-
-
 
 
 def Process_chunks(emails):
@@ -129,37 +127,7 @@ def ner_function(entities):
 
 
 
-tools = [
-    {
-        "type": "function",
-        "function": {
-            "name": "ner_function",
-            "description": "Extracts named entities and their custom categories from the input text based on the analysis of customer support emails for a webstore.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "entities": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "entity": {
-                                    "type": "string", 
-                                    "description": "A Named entity extracted from the customer service email chain."
-                                },
-                                "category": {
-                                    "type": "string", 
-                                    "description": "Custom category of the named entity based on the analysis of the email chain."
-                                }
-                            }                            
-                        }
-                    }
-                }
-            },
-            "required": ["entities"]
-        }
-    }
-]
+
 
 
 
@@ -243,10 +211,10 @@ if __name__ == '__main__':
 # ====================================================================================================
 
 
-    gen = Generator("emails")
-    gen.add_available_function("ner_function", ner_function)
+    #gen = Generator("emails")
+    #gen.add_available_function("ner_function", ner_function)
 
-    emails = json.load(open('emails.json', 'r'))
+    #emails = json.load(open('emails.json', 'r'))
 
     # for subject in list(emails.keys()):
     #     for email in emails[subject]:
@@ -258,13 +226,60 @@ if __name__ == '__main__':
     #             text = email['body']
     #             gen.run(msg=text, function_specifier="ner_function", model="gpt-4-1106-preview", temperature=0, max_tokens=3988, functions=tools)
 
+    
+
     transcript = open('transcript.txt', 'r').read()
 
-    gen.run(msg=transcript, function_specifier="ner_function", model="gpt-4-1106-preview", temperature=0, max_tokens=4000, functions=tools)
+    # count to ten for loop
+
+
+    prompt = "For the given text please extract key data variables and their values. This is for amalgamating company data from a given dataset from a companies files. It could be emails, company documents, legal documents, financial documents, etc. The extracted data needs to be accessible in a chatbot which will compare the user query to the extracted data and return the most relevant data. Omit any personally identifiable information. Extract only key data that can be provided in different contexts and is not specific to a single email or document."
+
+    #gen.system(prompt)
+
+
+
+    #gen.run(msg=transcript, function_specifier="ner_function", model="gpt-4-1106-preview", temperature=0, max_tokens=4000, functions=tools)
+    # gen.run(msg=transcript, model="gpt-4-1106-preview", temperature=0, max_tokens=4000)
+
+    # print(gen.generated_text)
 
 
 # ====================================================================================================
 # ====================================================================================================
+
+    thread = Threads("test")
+
+    thread.update_tools({"type": "retrieval"})
+
+    thread.add_file("transcript.txt")
+
+    instructions = "retrieve with the most relevant information from given files."
+
+    assistant_id = thread.create_assistant("gpt-4-1106-preview", instructions)
+
+    thread_id = thread.create_thread()
+
+
+
+    def thread_convo(query):
+        thread.add_message_to_thread(thread_id, query)
+
+        chatbot_instructions = "please reply to the user from the perspective of the customer service chatbot for the company using the given company data"
+
+        thread.run_assistant_with_message(thread_id, assistant_id, chatbot_instructions)
+
+        thread.retrieve_run_responses(thread_id)
+    
+
+
+    while True:
+        query = input("Enter a query: ")
+        thread_convo(query)
+
+    
+
+
 
 
     # for r in results:
