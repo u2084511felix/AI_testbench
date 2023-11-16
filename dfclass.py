@@ -385,11 +385,17 @@ class Threads:
         )
 
         last_message = ""
+
+        # change order of messages
+        iter = 0
         for each in messages:
             #print(each.role, ": ", each.content[0].text.value)
-            last_message = each.content[0].text.value
-            print(last_message)
+            if iter == 0: 
+                last_message = each.content[0].text.value
+            iter += 1
+            
 
+        print(last_message)
         return last_message
 
     def delete_assistant(self, assistant_id):
