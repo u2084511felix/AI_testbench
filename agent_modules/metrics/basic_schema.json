@@ -1,0 +1,9 @@
+{
+    "metric_name": {
+        "full_prompt_string": "The current value of this metric is {current_value}",
+        "update_search_query": "What is the current value of {metric_name}?",
+        "current_value": "{current_metric_value}",
+        "future_value_search_query": "What is the estimated future value of {metric_name}?",
+        "estimated_future_value": "{estimated_future_value}"
+    }
+}

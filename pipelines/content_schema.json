@@ -1,0 +1,87 @@
+{
+    "descriptions": "A description of the pipeline I/O generation process, the modules, the input and output files, and the requirements",
+    "tools": [],
+
+    "finished_article_ingredients": {
+
+        "editorial_metrics": {
+
+            "composition":{
+                "format": "",
+                "structure": {}
+            },
+
+            "alignment": {
+                "intent":{
+                    "mission_statement": ""
+                },
+
+                "analytics": {
+                    "engagement": "",
+                    "conversion_scores": {}
+                }
+            }
+        },
+
+        "interactive_elements": {
+
+            "links": {},
+            "quotes": {},
+            "descriptions": {},
+            "container_structure": {}
+        },
+
+
+        "context":{
+
+            "datapoints": [
+                {
+                    "name": "",
+                    "description": "",
+                    "metrics_generator_string": "",
+                    "key_metrics": [],
+                    "scope": ""
+                }
+            ], 
+            "category": "",
+            "field": "",
+            "market": ""
+        }
+    },
+
+    "knowledge_base_relations": [
+        {
+            "relation_type": "",
+            "relation_description": "",
+            "relation_metrics": "",
+            "relation_scope": ""
+        }
+    ],
+
+    "knowledge_base_rules": {
+
+        "retrieval": {
+            "methods": [],
+            "sources": []
+        },
+        "generation": {
+            "steps": []
+        },
+        "validation": "",
+        "transformation": "",
+        "storage_paths": {},
+        "update_frequency": ""
+
+    },
+
+    "knowledge_base_modules": [
+        {
+            "module_name": "",
+            "module_description": "",
+            "module_requirements": "",
+            "module_input": "",
+            "module_output": "",
+            "module_scope": ""
+        }
+    ]
+}

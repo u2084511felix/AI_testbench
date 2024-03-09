@@ -1,0 +1,427 @@
+{
+
+    "chat": {
+
+
+
+
+        "request": {
+            "model": "",
+            "messages": [
+                {"role": "system", "content": ""},
+                {"role": "user", "name": "","content": ""},
+                {"role": "assistant", "name": "", "content": ""},
+                {"role": "tool", "content": ""},
+                {"role": "user", "content": [
+                        {"type": "text", "text": "Whats in this image?"},
+                        {
+                            "type": "image_url",
+                            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+                        }
+                    ]
+                }
+            ],
+            "frequency_penalty": 2.0,
+            "logit_bias": {
+                "token_id:345349058349": 100,
+                "token_id:334565645645": -100
+            },
+            "logprobs": true,
+            "top_logprobs": 5,
+            "max_tokens": 250,
+            "n": 1,
+            "presence_penalty": 2.0,
+            "response_format": {
+                "type": "text or JSON"
+            },
+            "seed": "sdid34539845789273",
+            "stop": "stopping string seq / array: ['up to 4 strings']",
+            "stream": false,
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "tools": [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "",
+                        "description": "",
+                        "parameters": {}
+                    }
+                }
+            ],
+            "tool_choice": {"type": "function", "function": {"name": "my_function"}},
+            "user": "user_123456"
+        }, 
+
+
+
+
+        "response": {
+
+            "id": "chatcmpl-123",
+            "choices": [
+                {
+                    "index": 0,
+                    "message": {
+                        "role": "assistant",
+                        "content": "",
+                        "tool_calls": [
+                            {
+                                "id": "call_abc123",
+                                "type": "function",
+                                "function": {
+                                    "name": "get_current_weather",
+                                    "arguments": "{\n\"location\": \"Boston, MA\"\n}"
+                                }
+                            }
+                        ]
+                    },
+                    "logprobs": null,
+                    "finish_reason": "stop/length/content_filter/ __tool_calls"
+                }
+            ],
+            "created": 1677652288,
+            "model": "gpt-3.5-turbo-0613",
+            "system_fingerprint": "fp_44709d6fcb",
+            "object": "chat.completion",
+            "usage": {
+                "prompt_tokens": 9,
+                "completion_tokens": 12,
+                "total_tokens": 21
+            }
+        }
+    },
+
+
+    "moderation": {
+
+
+
+
+
+        "request": {
+
+
+            "input": "A string of up to 2048 characters to be moderated.",
+            "model": "text-moderation-latest"
+        },
+
+
+
+        
+
+
+
+        "response": {
+
+
+
+            "id": "modr-XXXXX",
+            "model": "text-moderation-005",
+            "results": [
+                {
+                  "flagged": true,
+                  "categories": {
+                      "sexual": false,
+                      "hate": false,
+                      "harassment": false,
+                      "self-harm": false,
+                      "sexual/minors": false,
+                      "hate/threatening": false,
+                      "violence/graphic": false,
+                      "self-harm/intent": false,
+                      "self-harm/instructions": false,
+                      "harassment/threatening": true,
+                      "violence": true
+                  },
+                  "category_scores": {
+                      "sexual": 1.2282071e-06,
+                      "hate": 0.010696256,
+                      "harassment": 0.29842457,
+                      "self-harm": 1.5236925e-08,
+                      "sexual/minors": 5.7246268e-08,
+                      "hate/threatening": 0.0060676364,
+                      "violence/graphic": 4.435014e-06,
+                      "self-harm/intent": 8.098441e-10,
+                      "self-harm/instructions": 2.8498655e-11,
+                      "harassment/threatening": 0.63055265,
+                      "violence": 0.99011886
+                  }
+                }
+            ]
+        }
+    },
+          
+
+
+    "embeddings": {
+
+
+
+
+        "request": {
+
+
+
+
+            "model": "text-embedding-3-small",
+            "inputs": ["Whats in this image?"],
+            "encoding_format": "float / base64",
+            "dimensions": 512,
+            "user": "user_123456"
+        },
+
+
+
+
+
+
+        "response": {
+
+
+            "object": "list",
+            "data": [
+                {
+                    "object": "embedding",
+                    "embedding": [
+                        0.0023064255,
+                        -0.009327292,
+                        -0.0028842222
+                    ],
+                    "index": 0
+                }
+            ],
+            "model": "text-embedding-ada-002",
+            "usage": {
+                "prompt_tokens": 8,
+                "total_tokens": 8
+            }
+        }
+    },
+
+
+    "fine-tuning": {
+
+
+
+
+        "request": {
+
+
+
+
+            "model": "",
+            "training_file": "The ID of an uploaded file that contains training data.",
+            "hyperparameters": {
+                "batch_size": 50,
+                "learning_rate_multiplier": 5,
+                "n_epochs": 5
+            },
+            "suffix": "A string of up to 18 characters that will be added to your fine-tuned model name.",
+            "validation_file": "The ID of an uploaded file that contains validation data."
+        }
+    },
+
+
+
+    "files": {
+
+
+
+
+
+        "request": {
+
+
+
+
+
+            "file": "file=open('mydata.jsonl', 'rb')",
+            "purpose": "fine-tune / assistants"
+        },
+
+
+
+
+
+        "response": {
+
+
+            "id": "file_123",
+            "object": "file",
+            "bytes": 12345,
+            "created": 1677652288,
+            "filename": "mydata.jsonl",
+            "purpose": "fine-tune / assistants/ fine-tune-results /assistants_output "
+        }
+    },
+
+
+
+    "images": {
+
+
+        "request": {
+
+
+
+
+            "create": {
+
+
+                "prompt": "A text description of the desired image(s). The maximum length is 1000 characters for dall-e-2 and 4000 characters for dall-e-3.",
+                "model": "dall-e-3",
+                "n": 1,
+                "quality": "standard / hd",
+                "response_format": "url / b64_json",
+                "size": "The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.",
+                "style": "vivid / natural (only dalle-3)",
+                "user": "user_123456"
+
+            },
+
+
+
+
+
+
+
+            "edit": {
+
+
+                "image": "image=open('otter.png', 'rb'),",
+                "prompt": "A text description of the desired image(s). The maximum length is 1000 characters for dall-e-2 and 4000 characters for dall-e-3.",
+                "mask": "open('mask.png', 'rb')",
+                "model": "dall-e-2",
+                "n": 1,
+                "size": "256x256, 512x512, or 1024x1024",
+                "response_format": "url / b64_json",
+                "user": "user_123456"
+            },
+
+
+
+
+
+
+            "variation": {
+
+
+                "image": "image=open('otter.png', 'rb'),",
+                "model": "dall-e-2",
+                "n": 1,
+                "response_format": "url / b64_json",
+                "size":"256x256, 512x512, or 1024x1024",
+                "user": "user_123456"
+            }
+        },
+
+
+
+
+
+
+
+        "response": {
+
+
+
+
+
+            "created": 1589478378,
+            "data": [
+                {
+                    "url": "https://..."
+                },
+                {
+                    "url": "https://..."
+                }
+            ]
+        }
+    },
+    
+
+
+    "audio": {
+
+        "request": {
+
+
+
+
+
+            "tts": {
+
+
+
+                "model": "text-to-speech-001",
+                "input": "The text to generate audio for. The maximum length is 4096 characters.",
+                "voice": "alloy, echo, fable, onyx, nova, and shimmer",
+                "response_format": "mp3, opus, aac, and flac",
+                "speed": "0.25 to 4.0"
+            },
+
+
+
+            "stt": {
+
+
+                "request": {
+
+
+                    "file": "The audio file object (not file name) to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.",
+                    "model": "whisper-1",
+                    "language": "The language of the input audio. Supplying the input language in ISO-639-1 format will improve accuracy and latency.",
+                    "prompt": "An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language.",
+                    "response_format": "json, text, srt, verbose_json, or vtt",
+                    "temperature": "0.0 to 1.0",
+                    "timestamp_granularities[]": "The timestamp granularities to populate for this transcription. response_format must be set verbose_json to use timestamp granularities. Either or both of these options are supported: word, or segment. Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency."
+                },
+
+
+
+                "response": {
+
+
+                    "text": "Imagine the wildest idea that you've ever had, and you're curious about how it might scale to something that's a 100, a 1,000 times bigger. This is a place where you can get to do that.",
+                    
+                    
+                    "verbose": {
+                        "language": "english",
+                        "duration": 8.470000267028809,
+                        "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",
+                        "segments": [
+                          {
+                            "id": 0,
+                            "seek": 0,
+                            "start": 0.0,
+                            "end": 3.319999933242798,
+                            "text": " The beach was a popular spot on a hot summer day.",
+                            "tokens": [
+                              50364, 440, 7534, 390, 257, 3743, 4008, 322, 257, 2368, 4266, 786, 13, 50530
+                            ],
+                            "temperature": 0.0,
+                            "avg_logprob": -0.2860786020755768,
+                            "compression_ratio": 1.2363636493682861,
+                            "no_speech_prob": 0.00985979475080967
+                          }
+                        ],
+                        "words": [
+                            {
+                                "word": "Hello",
+                                "start": 0.0,
+                                "end": 0.3199999928474426
+                            },
+                            {
+                                "word": "World",
+                                "start": 0.3199999928474426,
+                                "end": 0.77576567
+                            }
+                        ]
+                    }
+                }
+            }
+
+        }
+    }
+}

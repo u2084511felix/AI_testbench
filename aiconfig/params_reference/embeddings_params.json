@@ -1,0 +1,7 @@
+{
+    "model": "text-embedding-3-small",
+    "inputs": ["Whats in this image?"],
+    "encoding_format": "float / base64",
+    "dimensions": 512,
+    "user": "user_123456"
+}

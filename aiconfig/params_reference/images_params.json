@@ -1,0 +1,36 @@
+{
+    "create": {
+
+        "prompt": "A text description of the desired image(s). The maximum length is 1000 characters for dall-e-2 and 4000 characters for dall-e-3.",
+        "model": "dall-e-3",
+        "n": 1,
+        "quality": "standard / hd",
+        "response_format": "url / b64_json",
+        "size": "The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.",
+        "style": "vivid / natural (only dalle-3)",
+        "user": "user_123456"
+
+    },
+
+    "edit": {
+
+        "image": "image=open('otter.png', 'rb'),",
+        "prompt": "A text description of the desired image(s). The maximum length is 1000 characters for dall-e-2 and 4000 characters for dall-e-3.",
+        "mask": "open('mask.png', 'rb')",
+        "model": "dall-e-2",
+        "n": 1,
+        "size": "256x256, 512x512, or 1024x1024",
+        "response_format": "url / b64_json",
+        "user": "user_123456"
+    },
+
+    "variation": {
+
+        "image": "image=open('otter.png', 'rb'),",
+        "model": "dall-e-2",
+        "n": 1,
+        "response_format": "url / b64_json",
+        "size":"256x256, 512x512, or 1024x1024",
+        "user": "user_123456"
+    }
+}

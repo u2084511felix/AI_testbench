@@ -1,0 +1,31 @@
+{
+    "text": {
+        "three": {
+            "latest": "gpt-3.5-turbo-0125",
+            "previous": "gpt-3.5-turbo-1106",
+            "instruct": "gpt-3.5-turbo-instruct",
+            "deprecating": "gpt-3.5-turbo"
+        },
+        "four": {
+            "latest": "gpt-4-turbo-preview",
+            "previous": "gpt-4-1106-preview",
+            "legacy": "gpt-4"
+        },
+        "moderation": "text-moderation-latest",
+        "embedding": {
+            "large": "text-embedding-3-large",
+            "small": "text-embedding-3-small",
+            "legacy": "text-embedding-ada-002"
+        }
+    },
+    "vision": "gpt-4-vision-preview",
+    "images": {
+        "latest": "dalle-3",
+        "legacy": "dalle-2"
+    },
+    "audio": {
+        "tts": "tts-1",
+        "ttshd": "tts-1-hd",
+        "whisper": "whisper-1"
+    }
+}

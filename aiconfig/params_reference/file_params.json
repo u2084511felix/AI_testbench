@@ -1,0 +1,4 @@
+{
+    "file": "file=open('mydata.jsonl', 'rb')",
+    "purpose": "fine-tune / assistants"
+}

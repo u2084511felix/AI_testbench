@@ -1,0 +1,56 @@
+{
+    "chat": {
+        "model": "",
+        "messages": [
+            {"role": "system", "content": ""},
+            {"role": "user", "name": "","content": ""},
+            {"role": "assistant", "name": "", "content": ""},
+            {"role": "tool", "content": ""},
+            {"role": "user", "content": [
+                    {"type": "text", "text": "Whats in this image?"},
+                    {
+                        "type": "image_url",
+                        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+                    }
+                ]
+            }
+        ],
+        "frequency_penalty": 2.0,
+        "logit_bias": {
+            "token_id:345349058349": 100,
+            "token_id:334565645645": -100
+        },
+        "logprobs": true,
+        "top_logprobs": 5,
+        "max_tokens": 250,
+        "n": 1,
+        "presence_penalty": 2.0,
+        "response_format": {
+            "type": "text or JSON"
+        },
+        "seed": "sdid34539845789273",
+        "stop": "stopping string seq / array: ['up to 4 strings']",
+        "stream": false,
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "tools": [
+            {
+                "type": "function",
+                "function": {
+                    "name": "",
+                    "description": "",
+                    "parameters": {}
+                }
+            }
+        ],
+        "tool_choice": {"type": "function", "function": {"name": "my_function"}},
+        "user": "user_123456"
+    },
+
+    "moderation": {
+
+
+        "input": "A string of up to 2048 characters to be moderated.",
+        "model": "text-moderation-latest"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "model": "",
+    "training_file": "The ID of an uploaded file that contains training data.",
+    "hyperparameters": {
+        "batch_size": 50,
+        "learning_rate_multiplier": 5,
+        "n_epochs": 5
+    },
+    "suffix": "A string of up to 18 characters that will be added to your fine-tuned model name.",
+    "validation_file": "The ID of an uploaded file that contains validation data."
+}

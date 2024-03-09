@@ -1,0 +1,314 @@
+{
+    "account_info": {
+        "name": "",
+        "email": "",
+        "uuid": "",
+        "phone_number": 0,
+        "personal_trainer_account": "",
+        "client_ids": [],
+        "months_subscribed": 0
+    },
+
+    "account_settings": {
+        
+        "subscription": {
+            "current_status": "subscribed",
+            "tier": {
+                "basic": "yes",
+                "premium": {
+                    "trainer_connect":{
+                        "personal_trainer": "name",
+                        "trainers_account_id": ""
+                    }
+                }
+            }
+        },
+
+        "notification_settings":{
+            "push_notifications": true,
+            "schedule": "2 hours before meal",
+            "new_messages": "yes"
+        },
+
+        "language": "system_default",
+
+        "app_permissions": {
+            "location": "yes",
+            "notifications": "yes",
+            "access_device_storage": "yes",
+            "location_history": "store",
+            "third_party_sharing": "yes"
+        }
+    },
+
+    "user_profile_data": {
+        
+        "essentials": {
+            "height": "",
+            "gender": "",
+            "age": 22,
+            "long_term_health_conditions": [],
+            "allergies": []
+        },
+
+        "variables": {
+            "weight": "",
+            "BMR": "",
+            "dietary_restrictions": [],
+            "supplements": [],
+            "medications": []
+        },
+
+        "plan_preferences": {
+            "focus": ["weight loss", "muscle gain", "athletic performance", "general health"],
+            "nutrition_goals": ["calories", "macros", "micros", "nutrients", "minerals", "vitamins"],
+            "considerations": []
+        }
+    },
+
+    "taste": {
+        "likes": [],
+        "dislikes": []
+    },
+
+    "routines": {
+        "exercise": {
+            "frequency": ""
+        },
+        "breakfast_time": "",
+        "lunctime": "",
+        "dinner_time": "",
+        "average_meals_per_day": "",
+        "snack_frequency": ""
+    },
+
+    "current_progression": {
+        "completed_plans_archive": {
+            "dates": {}
+        },
+        "goals_reached": {},
+        "current_goals": {},
+        "improvements_made": {},
+        "satisfaction_level": {},
+        "summary": "overall summary of user progress in plain language"
+    },
+
+    "current_plan": {
+        "description": "semi-verbose summary",
+        "dates": "from and to",
+        "goals": ["calories", "macro"],
+        "focus": "improve deficiencies, focus on atheletic performance, etc",
+        "considerations": "like special occasions",
+        "progress": {
+            "profile_updates": { "self reported changes": "any"  },
+            "meals_consumed": {
+                "date": {
+                    "time": {
+                        "description": "",
+                        "ingredients": "",
+                        "nutritional_values": {
+                            "proteins": "",
+                            "fats": "",
+                            "carbs": "",
+                            "sugar": "",
+                            "salt": "",
+                            "minerals": "",
+                            "nutrients": ""
+                        },
+                        "portion_size": "",
+                        "estimated calories": ""
+                    }
+                }
+            },
+
+            "recommended_snacks_if_deficient": "",
+
+            "efficacy_score": "self-reported / or auto-generated",
+
+            "nutritional_progress": {
+                    "proteins": {
+                            "daily": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "weekly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "monthly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            }
+                    },
+                    "fats": {
+                            "daily": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "weekly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "monthly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            }
+                    },
+                    "carbs": {
+                            "daily": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "weekly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "monthly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            }
+                    },
+                    "sugar": {
+                            "daily": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "weekly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "monthly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            }
+                    },
+                    "salt": {
+                            "daily": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "weekly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "monthly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            }
+                    },
+                    "minerals": {
+                            "daily": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "weekly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "monthly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            }
+                    },
+                    "nutrients": {
+                            "daily": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "weekly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            },
+                            "monthly": {
+                                "goal": "",
+                                "actual_intake": ""
+                            }
+                    }
+            },
+
+            "deviations": {
+                "date & time": {
+                    "description": "",
+                    "remediation": ""
+                }
+            }
+        }
+    },
+
+    "recommendation_system": {
+
+        "plan_preferences": {},
+
+        "nutritional_plans": {},
+
+        "groceries": {
+            "current_stock": {},
+            "next_shop": {}
+        },
+
+        "meals": {
+            "recommendation_frequency_preference": ["2 hours before meals", "every morning", "weekly"],
+            "todays_meals": {
+                "breakfast": {},
+                "lunch": {},
+                "dinner": {},
+                "spontaneous_request": {
+                    "time_stamp": {}
+                }
+            }
+        },
+        
+        "routines": {
+            "exercise": {
+                    "frequency": "",
+                    "intensity": "",
+                    "type": ""
+            },
+            "average_sleep_hours": "",
+            "breakfast_time": "",
+            "lunctime": "",
+            "dinner_time": "",
+            "average_meals_per_day": "",
+            "snack_frequency": ""
+        }, 
+
+        "rejected_recommendations": {
+            "date": {
+                "rejection": "",
+                "reason": ""
+            }
+        },
+
+        "eating_out": {
+
+            "results": {
+                "establishment_name": {
+                    "distance": "",
+                    "type of food": "",
+                    "rating": "",
+                    "alignment to goals": "",
+                    "most_aligned_meal": "",
+                    "sorted_menu": {
+                        "dish_name": {
+                            "alignment_score": "",
+                            "price": ""
+                        }
+                    },
+                    "address": ""
+                }
+            },
+            "top_10_meals_from_results": {
+                    "dish_name": {
+                        "alignment_score": "",
+                        "rating": "",
+                        "price": "",
+                        "establishment_name": "",
+                        "distance": "",
+                        "address": ""
+                    }
+            }
+        }
+    },
+
+    "additional_insights_from_chatbot_interaction": {}
+}

@@ -1,0 +1,227 @@
+{
+    "descriptions": "A description of the pipeline I/O generation process, the modules, the input and output files, and the requirements",
+    "tools": [],
+
+    "finished_article_ingredients": {
+
+        "editorial_metrics": {
+
+            "semantics": {
+                "tone": "",
+                "style": "",
+                "voice": "",
+                "complexity": "",
+                "perplexity": ""
+            },
+            "composition":{
+                "format": "",
+                "structure": {},
+                "nuances": {},
+                "premises": {},
+                "propositions": {},
+                "conclusions": {},
+                "evidence": {}
+            },
+            "alignment": {
+
+                "intent":{
+
+                    "mission_statement": "",
+                    "sales_focus": 0.99,
+                    "rapport_focus": 0.99
+                },
+                
+                "target_audience": {
+                    "age_range": "",
+                    "income_bracket": "",
+                    "interests": "",
+                    "profession": "",
+                    "education_level": "",
+                    "locale": ""
+                },
+
+                "analytics": {
+
+                    "engagement": "",
+                    "retention_scores": {},
+                    "conversion_scores": {},
+                    "seo_scores": {},
+                    "viral_score": 0.0,
+                    "revenue": 0.0
+                },
+
+                "product_brand_alignment": {
+
+                    "product_values": "",
+                    "brand_values": "",
+                    "brand_voice": "",
+                    "brand_image": "",
+                    "brand_mission": "",
+                    "brand_vision": "",
+                    "brand_promise": "",
+                    "brand_story": "",
+                    "brand_personality": "",
+                    "brand_culture": "",
+                    "brand_community": "",
+                    "brand_loyalty": "",
+                    "brand_advocacy": "",
+                    "brand_reputation": "",
+                    "brand_identity": "",
+                    "brand_positioning": "",
+                    "brand_archetype": "",
+                    "brand_strategy": "",
+                    "brand_guidelines": "",
+                    "brand_standards": "",
+                    "brand_assets": "",
+                    "brand_elements": "",
+                    "brand_attributes: ": "",
+                    "brand_essence": ""
+
+                },
+
+                "category_alignment": {
+
+                    "series": false,
+                    "series_enhancement_score": "",
+                    "catalogue_enhancement_score": ""
+                }
+            },
+            "scope": {
+
+                "depth": "",
+                "breadth": "",
+                "temporal": ""
+            }
+        },
+
+        "interactive_elements": {
+
+            "links": {},
+            "images": {},
+            "videos": {},
+            "audio": {},
+            "quotes": {},
+            "headings": {},
+            "descriptions": {},
+            "subheadings": {},
+            "tags": {},
+            "container_structure": {},
+            "target_platform": {}
+        },
+
+        "appeal": {
+
+            "readability": "",
+            "clarity": "",
+            "conciseness": "",
+            "coherence": "",
+            "consistency": "",
+            "credibility": "",
+            "relevance": "",
+            "originality": "",
+            "engagement": "",
+            "persuasiveness": "",
+            "emotional_appeal": "",
+            "rational_appeal": "",
+            "ethical_appeal": "",
+            "aesthetic_appeal": "",
+            "cultural_appeal": "",
+            "social_appeal": "",
+            "psychological_appeal": "",
+            "logical_appeal": "",
+            "factual_appeal": "",
+            "statistical_appeal": "",
+            "scientific_appeal": "",
+            "technical_appeal": "",
+            "practical_appeal": "",
+            "theoretical_appeal": "",
+            "philosophical_appeal": "",
+            "political_appeal": "",
+            "economic_appeal": "",
+            "environmental_appeal": "",
+            "societal_appeal": "",
+            "historical_appeal": "",
+            "geographical_appeal": "",
+            "demographical_appeal": "",
+            "psychographical_appeal": "",
+            "technological_appeal": "",
+            "innovative_appeal": "",
+            "trendy_appeal": "",
+            "fashionable_appeal": "",
+            "stylish_appeal": "",
+            "luxurious_appeal": "",
+            "affordable_appeal": "",
+            "accessible_appeal": "",
+            "inclusive_appeal": "",
+            "diverse_appeal": "",
+            "multicultural_appeal": "",
+            "global_appeal": "",
+            "local_appeal": "",
+            "regional_appeal": "",
+            "national_appeal": "",
+            "international_appeal": "",
+            "universal_appeal": "",
+            "timeless_appeal": "",
+            "evergreen_appeal": "",
+            "classic_appeal": "",
+            "vintage_appeal": "",
+            "retro_appeal": "",
+            "nostalgic_appeal": "",
+            "sentimental_appeal": "",
+            "romantic_appeal": ""
+        },
+
+        "context":{
+
+            "datapoints": [
+                {
+                    "name": "",
+                    "description": "",
+                    "metrics_generator_string": "",
+                    "key_metrics": [],
+                    "scope": ""
+                }
+            ], 
+            "category": "",
+            "field": "",
+            "industry": "",
+            "market": ""
+        }
+    },
+
+    "knowledge_base_relations": [
+        {
+            "relation_type": "",
+            "relation_description": "",
+            "relation_metrics": "",
+            "relation_scope": ""
+        }
+    ],
+
+    "knowledge_base_rules": {
+
+        "retrieval": {
+            "methods": [],
+            "sources": []
+        },
+        "generation": {
+            "steps": []
+        },
+        "validation": "",
+        "transformation": "",
+        "storage_paths": {},
+        "update_frequency": ""
+
+    },
+
+    "knowledge_base_modules": [
+        {
+            "module_name": "",
+            "module_description": "",
+            "module_requirements": "",
+            "module_input": "",
+            "module_output": "",
+            "module_scope": ""
+        }
+    ]
+}
